@@ -16,5 +16,28 @@ def parse_record(line):
         'date': date
     }
 
+def read_valid(lines):
+    valid_records = []
+    for line in lines:
+        if not line:
+            continue
+        try:
+            record = parse_record(line)
+            valid_records.append(record)
+        except ValueError:
+            continue
+    return valid_records
+
+def average_by_city(records):
+    totals = {}
+    counts = {}
+    for r in records:
+        city = r['city']
+        totals[city] = totals.get(city, 0.0) + r['temp']
+        counts[city] = counts.get(city, 0) + 1
+    averages = {}
+    for city in totals:
+        averages[city] = round(totals[city] / counts[city], 1)
+    return averages
 
 
