@@ -41,3 +41,4 @@ def average_by_city(records):
     return averages
 
 
+
