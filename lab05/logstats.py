@@ -58,3 +58,17 @@ def top_errors(lines, n):
 
     return result[:n]
 
+
+def format_report(counts, errors):
+    report = 'Отчёт по журналу\n\n'
+
+    for level in sorted(counts):
+        report += level + ': ' + str(counts[level]) + '\n'
+
+    report += '\nЧастые ошибки:\n'
+
+    for error in errors:
+        report += '- ' + error[0] + ' — ' + str(error[1]) + '\n'
+
+    return report
+
