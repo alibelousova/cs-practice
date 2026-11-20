@@ -1,14 +1,15 @@
 import json
+import re
 
 
 def csv_to_records(text):
     lines = [line for line in text.splitlines() if line.strip()]
     if not lines:
         return []
-    head = lines[0].split(',')
+    head = [h.strip() for h in lines[0].split(',')]
     data = []
     for line in lines[1:]:
-        values = line.split(',')
+        values = [v.strip() for v in line.split(',')]
         data.append(dict(zip(head, values)))
     return data
 
@@ -20,14 +21,10 @@ def _convert(value):
         return True
     if low in ('false', 'no'):
         return False
-    try:
+    if re.fullmatch(r'-?\d+', value):
         return int(value)
-    except ValueError:
-        pass
-    try:
+    if re.fullmatch(r'-?\d+\.\d+', value):
         return float(value)
-    except ValueError:
-        pass
     return value
 
 
